@@ -1,0 +1,54 @@
+<app-card-wrapper title="Order Details">
+  <ng-template #content>
+    <form [formGroup]="orderDetailForm">
+      <div class="form-group row">
+        <div #supplierDropdown="ngbDropdown" ngbDropdown [open]="(supplier$ | async) && (supplier$ | async)?.length !== 0" class="my-2">
+          <input
+            type="text"
+            formControlName="supplierName"
+            class="form-control"
+            placeholder="Supplier Name"
+            required
+          />
+          <div ngbDropdownMenu aria-labelledby="dropdownSupplier">
+            <button *ngFor="let supplier of supplier$ | async" ngbDropdownItem>
+              {{ supplier.name }}
+            </button>
+          </div>
+        </div>
+        <div #locationDropdown="ngbDropdown" ngbDropdown [open]="(location$ | async) && (location$ | async)?.length !== 0" class="my-2">
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Location"
+            formControlName="location"
+            required
+          />
+          <button *ngFor="let location of location$ | async" ngbDropdownItem>
+            {{ location.name }}
+          </button>
+        </div>
+        <div class="my-2">
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Supplier Invoice Number"
+            formControlName="invoiceNumber"
+          />
+        </div>
+        <div class="my-2">
+          <textarea
+            class="form-control"
+            formControlName="notes"
+            placeholder="Notes"
+            rows="3"
+            maxlength="200"
+          ></textarea>
+          <div class="text-right">
+            <p>{{ notes.value.length }}/200</p>
+          </div>
+        </div>
+      </div>
+    </form>
+  </ng-template>
+</app-card-wrapper>

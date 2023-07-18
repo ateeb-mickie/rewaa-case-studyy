@@ -1,0 +1,9 @@
+<div class="card">
+  <div class="card-body">
+    <h5 class="card-title">{{ title }}</h5>
+    <ng-container *ngTemplateOutlet="content || default"></ng-container>
+  </div>
+</div>
+<ng-template #default>
+  <p class="card-text">Content not provided</p>
+</ng-template>

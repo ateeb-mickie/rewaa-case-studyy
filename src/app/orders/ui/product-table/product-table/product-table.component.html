@@ -1,0 +1,304 @@
+<form class="table-responsive" [formGroup]="productForm">
+  <table class="table">
+    <thead>
+      <tr class="table-secondary">
+        <th scope="col"></th>
+        <th scope="col">Product Name / SKU</th>
+        <th scope="col">New Qty</th>
+        <th scope="col">New Cost (Tax Exclusive)</th>
+        <th scope="col">Tax Code</th>
+        <th scope="col"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <ng-container formArrayName="products">
+        <ng-container
+          *ngFor="let product of products.controls; let i = index"
+          [formGroupName]="i"
+        >
+          <tr>
+            <td class="px-10">
+              <a (click)="collapse.toggle()">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="16"
+                  fill="currentColor"
+                  class="bi bi-caret-right"
+                  viewBox="0 0 16 16"
+                >
+                  <path
+                    d="M6 12.796V3.204L11.481 8 6 12.796zm.659.753 5.48-4.796a1 1 0 0 0 0-1.506L6.66 2.451C6.011 1.885 5 2.345 5 3.204v9.592a1 1 0 0 0 1.659.753z"
+                  />
+                </svg>
+                <ng-template #downArrow> </ng-template>
+              </a>
+            </td>
+            <td class="px-10">
+              <input
+                type="text"
+                formControlName="name"
+                class="form-control-plaintext"
+              />
+              <input
+                type="text"
+                formControlName="sku"
+                class="form-control-plaintext"
+              />
+            </td>
+            <td class="px-10">
+              <input type="number" formControlName="qty" class="form-control" />
+            </td>
+            <td class="px-10">
+              <input
+                type="number"
+                formControlName="newCost"
+                class="form-control"
+              />
+            </td>
+            <td class="px-10">
+              <select
+                class="form-select"
+                formControlName="taxCode"
+                aria-label="Default select example"
+              >
+                <option value="no-tax">No Tax</option>
+                <option value="vat">Value Added Tax</option>
+              </select>
+            </td>
+            <td>
+                <a (click)="removeProduct(i)">
+                    <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="16"
+                    height="16"
+                    fill="currentColor"
+                    class="bi bi-trash"
+                    viewBox="0 0 16 16"
+                  >
+                    <path
+                      d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6Z"
+                    />
+                    <path
+                      d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1ZM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118ZM2.5 3h11V2h-11v1Z"
+                    />
+                  </svg>
+                </a>
+            </td>
+          </tr>
+          <tr
+            class="table-secondary"
+            #collapse="ngbCollapse"
+            [ngbCollapse]="true"
+          >
+            <td colspan="2"></td>
+            <td colspan="2">
+              <div>
+                <div class="mb-3">
+                  <label for="" class="form-label"
+                    >Availble Qty
+                    <div>(Availble in stock)</div></label
+                  >
+                  <input
+                    readonly
+                    type="number"
+                    formControlName="availableQty"
+                    class="form-control-plaintext"
+                    value="0"
+                  />
+                </div>
+                <div class="mb-3">
+                  <label for="" class="form-label"
+                    >Expected Qty
+                    <div>(Total will be availble)</div></label
+                  >
+                  <input
+                    readonly
+                    type="number"
+                    formControlName="expectedQty"
+                    class="form-control-plaintext"
+                    value="0"
+                  />
+                </div>
+                <div class="mb-3">
+                  <label for="" class="form-label">Last Buy Price</label>
+                  <input
+                    readonly
+                    type="number"
+                    formControlName="lastBuyPrice"
+                    class="form-control-plaintext"
+                  />
+                </div>
+              </div>
+            </td>
+            <td colspan="2">
+              <div class="mb-3">
+                <label for="" class="form-label"
+                  >Total Cost
+                  <div>(Tax Exclusive)</div></label
+                >
+                <input
+                  readonly
+                  type="number"
+                  formControlName="totalCostExc"
+                  class="form-control-plaintext"
+                />
+              </div>
+              <div class="mb-3">
+                <label for="" class="form-label">Tax Amount</label>
+                <input
+                  readonly
+                  type="number"
+                  formControlName="taxAmount"
+                  class="form-control-plaintext"
+                />
+              </div>
+              <div class="mb-3">
+                <label for="" class="form-label"
+                  >Total Cost
+                  <div>(Tax Inclusive)</div></label
+                >
+                <input
+                  readonly
+                  type="number"
+                  formControlName="totalCostInc"
+                  class="form-control-plaintext"
+                />
+              </div>
+            </td>
+          </tr>
+        </ng-container>
+      </ng-container>
+      <tr>
+        <td class="m">
+          <a (click)="tax.toggle()">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              fill="currentColor"
+              class="bi bi-caret-right"
+              viewBox="0 0 16 16"
+            >
+              <path
+                d="M6 12.796V3.204L11.481 8 6 12.796zm.659.753 5.48-4.796a1 1 0 0 0 0-1.506L6.66 2.451C6.011 1.885 5 2.345 5 3.204v9.592a1 1 0 0 0 1.659.753z"
+              />
+            </svg>
+          </a>
+        </td>
+        <td>Total (Tax Inclusive)</td>
+        <td></td>
+        <td colspan="3">
+          <input
+            type="number"
+            formControlName="total"
+            class="form-control-plaintext"
+          />
+        </td>
+      </tr>
+      <tr #tax="ngbCollapse" [ngbCollapse]="true">
+        <td colspan="6">
+          <div class="mx-3">
+            <div class="my-3 row">
+              <label class="col-md-6 col-form-label"
+                >Sub Total (Tax Exclusive)</label
+              >
+              <div class="col-md-6">
+                <input
+                  readonly
+                  type="number"
+                  formControlName="totalTaxExc"
+                  class="form-control-plaintext"
+                />
+              </div>
+            </div>
+            <div class="my-3 row">
+              <label class="col-md-6 col-form-label">Total Tax</label>
+              <div class="col-md-6">
+                <input
+                  readonly
+                  type="number"
+                  formControlName="totalTax"
+                  class="form-control-plaintext"
+                />
+              </div>
+            </div>
+          </div>
+        </td>
+      </tr>
+      <tr class="table-secondary">
+        <td colspan="6">
+          <div class="d-flex flex-row m-3">
+            <div class="form-check me-3">
+              <label class="radio-inline form-check-label">
+                <input
+                  type="radio"
+                  class="form-check-input"
+                  formControlName="payNow"
+                  [value]="true"
+                />
+                <strong> Pay Now</strong>
+              </label>
+            </div>
+            <div class="form-check me-3">
+              <label class="radio-inline form-check-label">
+                <input
+                  type="radio"
+                  class="form-check-input"
+                  formControlName="payNow"
+                  [value]="false"
+                />
+                <strong>Pay Later</strong>
+              </label>
+            </div>
+          </div>
+          <div class="ms-3 me-5">
+            <form class="me-5">
+              <ng-container *ngIf="payNow.value">
+                <div class="my-3 row">
+                  <label for="staticEmail" class="col-md-6 col-form-label"
+                    >Payment Method</label
+                  >
+                  <div class="col-md-6">
+                    <select
+                      class="form-select"
+                      formControlName="paymentMethod"
+                      aria-label="Default select example"
+                    >
+                      <option selected value="" disabled>Select Method</option>
+                      <option value="cash">Cash</option>
+                      <option value="credit-card">Credit Card</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="my-3 row">
+                  <label class="col-md-6 col-form-label">Paid Amount</label>
+                  <div class="col-md-6">
+                    <input type="number" formControlName="paidAmount" class="form-control" />
+                  </div>
+                </div>
+              </ng-container>
+              <div class="my-3 row">
+                <label class="col-md-6 col-form-label">Credit Amount</label>
+                <div class="col-md-6">
+                  <input
+                    readonly
+                    type="number"
+                    class="form-control-plaintext"
+                    [value]="(total.value - paidAmount.value >= 0) ? total.value - paidAmount.value : 0"
+                  />
+                </div>
+              </div>
+              <div class="my-3 row">
+                <label class="col-md-6 col-form-label">Payment Due Date</label>
+                <div class="col-md-6">
+                  <input type="date" formControlName="paymentDueDate" class="form-control" />
+                </div>
+              </div>
+            </form>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</form>
